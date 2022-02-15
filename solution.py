@@ -24,7 +24,7 @@ def webServer(port=13331):
                 outputdata = f.read()# Fill in start     #Fill in end
 
                 # Send one HTTP header line into socket.
-                header='HTTP/1.1 200 OK\r\n'
+                header='HTTP/1.1 200 OK\r\n\r\n'
                 connectionSocket.send(header.encode())
                 # Fill in start
 
