@@ -9,7 +9,7 @@ def webServer(port=13331):
     # Prepare a server socket
     serverSocket.bind(('', port))
     # Fill in start
-    serverSocket.listen(1)
+    serverSocket.listen(2)
     # Fill in end
 
     while True:
@@ -18,26 +18,27 @@ def webServer(port=13331):
         try:
 
             try:
-                message = serverSocket.recv(1024)# Fill in start    #Fill in end
+                message = serverSocket.recv(1024).decode() # Fill in start    #Fill in end
                 filename = message.split()[1]
                 f = open(filename[1:])
                 outputdata = f.read()# Fill in start     #Fill in end
 
                 # Send one HTTP header line into socket.
-                connectionSocket.send("HTTP/1.1 200 OK\r\n\r\n")
+                header='HTTP/1.1 200 OK\r\n'
+                connectionSocket.send(header.encode('utf-8'))
                 # Fill in start
 
                 # Fill in end
-                #connectionSocket.send(outputdata.encode())
+                connectionSocket.send(outputdata.encode())
                 # Send the content of the requested file to the client
                 for i in range(0, len(outputdata)):
-                    connectionSocket.send(outputdata[i])
+                    connectionSocket.send(outputdata[i].encode())
 
-                connectionSocket.send('\r\n')
+                connectionSocket.send('\r\n'.encode())
                 connectionSocket.close()
             except IOError:
-                connectionSocket.send("HTTP/1.1 404 Not found\r\n\r\n")
-                connectionSocket.send("<html><head></head><body><h1>404 Not found</h1></body></html>\r\n")
+                connectionSocket.send(bytes('HTTP/1.1 404 Not Found \r\n', 'UTF-8'))
+                connectionSocket.send(bytes('<html><head></head><body><h1>404 Not Found</h1></body></html>\r\n', 'UTF-8'))
 
         except (ConnectionResetError, BrokenPipeError):
             pass
