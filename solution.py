@@ -18,14 +18,14 @@ def webServer(port=13331):
         try:
 
             try:
-                message = serverSocket.recv(1024).decode() # Fill in start    #Fill in end
+                message = serverSocket.recv(1024).decode()# Fill in start    #Fill in end
                 filename = message.split()[1]
                 f = open(filename[1:])
                 outputdata = f.read()# Fill in start     #Fill in end
 
                 # Send one HTTP header line into socket.
-                header='HTTP/1.1 200 OK\r\n\r\n'
-                connectionSocket.send(header.encode())
+                #header='HTTP/1.1 200 OK\r\n\r\n'
+                connectionSocket.send(bytes('HTTP/1.1 200 OK\r\n\r\n', 'UTF-8'))
                 # Fill in start
 
                 # Fill in end
