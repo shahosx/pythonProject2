@@ -24,7 +24,7 @@ def webServer(port=13331):
                 outputdata = f.read()# Fill in start     #Fill in end
 
                 # Send one HTTP header line into socket.
-                connectionSocket.send('HTTP/1.1 200 OK\r\n'.encode())
+                connectionSocket.send(bytes('HTTP/1.1 200 OK\r\n', 'UTF-8'))
                 # Fill in start
 
                 # Fill in end
@@ -36,8 +36,8 @@ def webServer(port=13331):
                 connectionSocket.send('\r\n'.encode())
                 connectionSocket.close()
             except IOError:
-                connectionSocket.send('HTTP/1.1 404 Not Found\r\n'.encode())
-                connectionSocket.send('<html><head></head><body><h1> 404 Not Found</h1></body></html>\r\n')
+                connectionSocket.send(bytes('HTTP/1.1 404 Not Found\r\n', 'UTF-8'))
+                connectionSocket.send(bytes('<html><head></head><body><h1>404 Not Found</h1></body></html>\r\n', 'UTF-8'))
 
         except (ConnectionResetError, BrokenPipeError):
             pass
