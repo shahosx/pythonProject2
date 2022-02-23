@@ -1,6 +1,4 @@
-import socket
 from socket import *
-import smtplib
 
 def smtp_client(port=1025, mailserver='127.0.0.1'):
     msg = "\r\n My message email from Shahadat Hossain"
@@ -10,7 +8,7 @@ def smtp_client(port=1025, mailserver='127.0.0.1'):
 
     # Create socket called clientSocket and establish a TCP connection with mailserver and port
     clientSocket = socket(AF_INET, SOCK_STREAM)
-    clientSocket.connect(mailserver, port)
+    clientSocket.connect((mailserver, port))
     # Fill in start
     # Fill in end
 
@@ -31,13 +29,15 @@ def smtp_client(port=1025, mailserver='127.0.0.1'):
 
     # Send MAIL FROM command and handle server response.
     # Fill in start
-    sent_from ='MAIL FROM: <shahosx@gmail.com>\r\n'
+    from_Email ='sh6499@nyu.edu'
+    sent_from ='MAIL FROM: '+from_Email+'\r\n'
     clientSocket.send(sent_from.encode())
     recv2= clientSocket.recv(1024).decode()
     # Fill in end
     #Subject = ''
     # Send RCPT TO command and handle server response.
-    email_to = 'RCPT TO: <shahosx@gmail.com>\r\n'
+    toEmail= 'shahosx@gmail.com'
+    email_to = 'RCPT TO: '+toEmail+'\r\n'
     clientSocket.send(email_to.encode())
     recv3= clientSocket.recv(1024).decode()
 
