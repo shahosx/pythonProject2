@@ -5,13 +5,12 @@ import smtplib
 def smtp_client(port=1025, mailserver='127.0.0.1'):
     msg = "\r\n My message email from Shahadat Hossain"
     endmsg = "\r\n.\r\n"
-    host =''
+
     # Choose a mail server (e.g. Google mail server) if you want to verify the script beyond GradeScope
-    gmail_user= 'shahosx@gmail.com'
-    gmail_Password = ''
+
     # Create socket called clientSocket and establish a TCP connection with mailserver and port
-    clientSocket = socket(AF_INET, SOCK_DGRAM)
-    clientSocket.connect(mailserver)
+    clientSocket = socket(AF_INET, SOCK_STREAM)
+    clientSocket.connect(mailserver, port)
     # Fill in start
     # Fill in end
 
@@ -48,24 +47,26 @@ def smtp_client(port=1025, mailserver='127.0.0.1'):
 
 
     # Send DATA command and handle server response.
-    sending_data ='DATA: \r\n'
-    clientSocket.send(msg.encode())
+    sending_data ='DATA\r\n'
+    clientSocket.send(sending_data.encode())
     recv4 = clientSocket.recv(1024).decode()
     # Fill in start
     # Fill in end
 
     # Send message data.
-    # Fill in start
-    # Fill in end
+    clientSocket.send(msg.encode())
+    #recv4 = clientSocket.recv(1024).decode()
 
     # Message ends with a single period, send message end and handle server response.
     # Fill in start
     clientSocket.send(endmsg.encode())
-    recv3 = clientSocket.recv(1024).decode()
+    recv5 = clientSocket.recv(1024).decode()
     # Fill in end
-    clientSocket.close()
     # Send QUIT command and handle server response.
     # Fill in start
+    clientSocket.send("QUIT\r\n".encode())
+    quitConnection = clientSocket.recv(1024)
+    clientSocket.close()
     # Fill in end
 
 
